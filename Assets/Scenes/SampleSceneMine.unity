@@ -219,7 +219,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 493b242fb6c069e4590a9c820ab9271a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
 --- !u!212 &474512151
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -593,6 +592,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: bottom wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 9197278135726134815, guid: bc2892c7f534f5d4bb9a03663f20b93d,
+        type: 3}
+      propertyPath: m_TagString
+      value: sol
       objectReference: {fileID: 0}
     - target: {fileID: 5422984494813126664, guid: bc2892c7f534f5d4bb9a03663f20b93d,
         type: 3}
