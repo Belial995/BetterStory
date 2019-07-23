@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class mouvement : MonoBehaviour
+public class Mouvement : MonoBehaviour
 {
     Rigidbody2D rigid;
-    bool qqch;
     public float MaxJump;
     private bool AuSol = false;
     // Start is called before the first frame update

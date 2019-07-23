@@ -718,8 +718,9 @@ GameObject:
   - component: {fileID: 1848253268}
   - component: {fileID: 1848253267}
   - component: {fileID: 1848253266}
-  - component: {fileID: 1848253270}
   - component: {fileID: 1848253271}
+  - component: {fileID: 1848253270}
+  - component: {fileID: 1848253272}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -846,7 +847,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1848253265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d53e6d348326234f916890c96c858f8, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f1e08dd711c5ed45bdca3ffe4dd9f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MaxJump: 18
@@ -862,7 +863,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: -0.034865014, y: 0.23046528}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -876,6 +877,42 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.35459757, y: 0.16141614}
   m_EdgeRadius: 0
+--- !u!66 &1848253272
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848253265}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 1848253271}
+    m_ColliderPaths:
+    - - X: 14243347
+        Y: 14975721
+      - X: 14243347
+        Y: 31117334
+      - X: -21216380
+        Y: 31117305
+      - X: -21216351
+        Y: 14975721
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 1.4243348, y: 3.1117334}
+      - {x: -2.121638, y: 3.1117303}
+      - {x: -2.1216352, y: 1.4975721}
+      - {x: 1.4243348, y: 1.4975721}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.000005
 --- !u!1 &1953986629
 GameObject:
   m_ObjectHideFlags: 0
