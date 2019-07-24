@@ -24,14 +24,18 @@ public class PlayerController : MonoBehaviour
     public bool spawnShield = false;
     private bool canMove = true;
     private float direction;
+
+    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponentInChildren<Animator>();
         rigidBody2D = GetComponent<Rigidbody2D>();
     }
     // Update is called once per frame
     void Update()
     {
+        animator.SetFloat("velocity",Mathf.Abs(rigidBody2D.velocity.x));
         //mouvement gauche droite
         
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -97,7 +101,7 @@ public class PlayerController : MonoBehaviour
         }
         //levée de bouclier
 
-        if (Input.GetButton("Shield"))
+        if (Input.GetButton("Shield")&&(spawnShield == false))
         {
             canMove = false;
             Debug.Log("boucliers");
