@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public float raycastRadius;//rayon de détection
     public LayerMask mask;
     public float jumpForce = 10;
-
+    [SerializeField] GameObject shieldPrefab;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +41,18 @@ public class PlayerController : MonoBehaviour
         {
             rigidBody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);//donne une impulsion verticale
         }
+        //bouclier
+        //a mettre dans le code du joueur
+        if(Input.GetKeyDown(KeyCode.W))
+        {
+            GameObject monObject = Instantiate(shieldPrefab);
+            float verticalInput = Input.GetAxis("Vertical");       
+            monObject.GetComponent<Rigidbody2D>().velocity = new Vector3(horizontalInput, verticalInput, 0);
+        }
+        
+
+        
+       
     }
 
 }
