@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public enum DashState
+    {
+        NOT_DASH,
+        DASH_BEGIN,
+        IN_DASH,
+        DASH_END
+    }
+    private DashState dashState = DashState.NOT_DASH;
+    public float dashSpeed = 10;
     private Rigidbody2D rigidBody2D;
     public float playerVelocity = 10;
     public float shieldVelocity = 10;
@@ -13,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 10;
     [SerializeField] GameObject shieldPrefab;
     public bool spawnShield = false;
+    private bool canMove = true;
     private float direction;
     // Start is called before the first frame update
     void Start()
@@ -23,17 +33,21 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //mouvement gauche droite
+        
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        Vector2 velocity = new Vector2(horizontalInput * playerVelocity, rigidBody2D.velocity.y);
-        rigidBody2D.velocity = velocity;
+        if(canMove == true)
+        {
+            Vector2 velocity = new Vector2(horizontalInput * playerVelocity, rigidBody2D.velocity.y);
+            rigidBody2D.velocity = velocity;
+        }      
         //inversion du sprite du personnage
         Vector3 scale = transform.localScale;
-        if (velocity.x > 0)
+        if (rigidBody2D.velocity.x > 0)
         {
             scale.x = Mathf.Abs(scale.x);
         }
-        else if (velocity.x < 0)
+        else if (rigidBody2D.velocity.x < 0)
         {
             scale.x = -Mathf.Abs(scale.x);
         }
@@ -49,29 +63,69 @@ public class PlayerController : MonoBehaviour
         //a mettre dans le code du joueur
         if(Input.GetButtonDown("Fire1")&&(spawnShield != true))
         {
+            
             if(transform.localScale.x > 0)
             {
                 GameObject monObject = Instantiate(shieldPrefab, new Vector3(transform.position.x + 5, transform.position.y, transform.position.z), Quaternion.identity);
+                monObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
                 monObject.GetComponent<Rigidbody2D>().velocity = new Vector2(shieldVelocity, verticalInput)*shieldVelocity;
             }
             if(transform.localScale.x < 0)
             {
                 GameObject monObject = Instantiate(shieldPrefab, new Vector3(transform.position.x - 5, transform.position.y, transform.position.z), Quaternion.identity);
+                monObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
                 monObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-shieldVelocity, verticalInput)*shieldVelocity;
             }
                 spawnShield = true;
         }
-        //dash
-        if(Input.GetButtonDown("enter"))
+        //levée de bouclier
+
+        if (Input.GetButton("Shield"))
         {
-            if(transform.localScale.x > 0)
-            {
+            canMove = false;
+            Debug.Log("boucliers");
+            GetComponent<CapsuleCollider2D>().enabled = true;       
+        }
+        else
+        {
+            canMove = true;
+            GetComponent<CapsuleCollider2D>().enabled = false;
+        }
+        //dash
+        if(Input.GetButtonDown("Fire2")&& (Input.GetButton("Shield")&&(spawnShield == false)))
+        {
+            canMove = true;
 
-            }
-            if(transform.localScale.x < 0)
-            {
+            dashState = DashState.DASH_BEGIN;
 
-            }
+
+            Debug.Log("dash");
+            
+        }
+        Dash();
+    }
+    void Dash()
+    {
+        switch (dashState)
+        {
+            case DashState.DASH_BEGIN:
+                
+                if(transform.localScale.x > 0)
+                {
+                    rigidBody2D.velocity = new Vector2(dashSpeed, 0);
+                }
+                if(transform.localScale.x < 0)
+                {
+                    rigidBody2D.velocity = new Vector2(-dashSpeed, 0);
+                }
+                dashState = DashState.IN_DASH;
+                break;
+            case DashState.IN_DASH:
+                dashState = DashState.DASH_END;
+                break;
+            case DashState.DASH_END:
+                dashState = DashState.NOT_DASH;
+                break;
         }
     }
 }
