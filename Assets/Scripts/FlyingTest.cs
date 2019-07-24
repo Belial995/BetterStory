@@ -20,13 +20,7 @@ public class FlyingTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //a mettre dans le code du joueur
-        GameObject monObject = Instantiate(shieldPrefab);
 
-        monObject.GetComponent<Rigidbody2D>().velocity = new Vector3(1, 2, 0);
-
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
 
         //transform.position += Time.deltaTime * shieldvelocity;
         //private void Collision

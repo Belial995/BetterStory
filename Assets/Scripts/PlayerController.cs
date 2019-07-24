@@ -6,11 +6,13 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rigidBody2D;
     public float playerVelocity = 10;
+    public float shieldVelocity = 10;
     public Transform jumpPosition;
     public float raycastRadius;//rayon de détection
     public LayerMask mask;
     public float jumpForce = 10;
     [SerializeField] GameObject shieldPrefab;
+    bool spawnShield = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,11 +45,14 @@ public class PlayerController : MonoBehaviour
         }
         //bouclier
         //a mettre dans le code du joueur
-        if(Input.GetKeyDown(KeyCode.W))
+        if(Input.GetKeyDown(KeyCode.W)&&(spawnShield != true))
         {
             GameObject monObject = Instantiate(shieldPrefab);
             float verticalInput = Input.GetAxis("Vertical");       
-            monObject.GetComponent<Rigidbody2D>().velocity = new Vector3(horizontalInput, verticalInput, 0);
+            monObject.GetComponent<Rigidbody2D>().velocity = new Vector3(horizontalInput*shieldVelocity, verticalInput, 0);
+            monObject.GetComponent<Transform>().position = transform.position;
+            spawnShield = true;
+
         }
         
 
