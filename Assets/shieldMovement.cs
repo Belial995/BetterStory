@@ -6,7 +6,7 @@ public class shieldMovement : MonoBehaviour
 {
     public float shieldVelocity;
     private bool isFlying;
-    private bool ofGround;
+    public bool ofGround;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +41,7 @@ public class shieldMovement : MonoBehaviour
             ofGround = true;
 
         }
-        if(collision.gameObject.tag == "shield")
+        if((collision.gameObject.tag == "shield") || (collision.gameObject.tag == "player"))
         {
             isFlying = false;
             Debug.Log("Bouclier touche!");
@@ -65,16 +65,16 @@ public class shieldMovement : MonoBehaviour
             }
             
         }
-        
+
         if ((collision.gameObject.tag == "player") && (ofGround == true))
         {
             Destroy(gameObject);
             collision.gameObject.GetComponent<PlayerController>().spawnShield = false;
             Debug.Log("test");
         }
-       
-            
-        
+
+
+
 
 
 

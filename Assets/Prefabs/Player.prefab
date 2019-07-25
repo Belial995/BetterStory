@@ -69,7 +69,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 36af44bcd23924d49ae520026774b058, type: 3}
+  m_Sprite: {fileID: 21300000, guid: eeaf16c49234f4345b679d121aa20a8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 471247478011141011}
   - component: {fileID: 471247478011141010}
   - component: {fileID: 471247478011141014}
+  - component: {fileID: 7737958947500984751}
   m_Layer: 0
   m_Name: Player
   m_TagString: player
@@ -198,17 +199,18 @@ MonoBehaviour:
   armorState: 1
   dashSpeed: 500
   playerVelocity: 30
-  shieldVelocity: 9
+  shieldVelocity: 10
   jumpPosition: {fileID: 471247478019535782}
   raycastRadius: 0.7
   mask:
     serializedVersion: 2
     m_Bits: 256
-  jumpForce: 60
+  jumpForce: 55
   shieldPrefab: {fileID: 8697683325603813920, guid: c4abc007e867c7147937e6f83c12c187,
     type: 3}
   spawnShield: 0
   shieldOn: 0
+  playerIndex: 1
 --- !u!70 &471247478011141014
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -222,9 +224,35 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.8939857, y: -0.6030481}
-  m_Size: {x: 1.5887222, y: 3.5694432}
+  m_Offset: {x: 0.51384544, y: -0.3898592}
+  m_Size: {x: 1.5599709, y: 5.161894}
   m_Direction: 0
+--- !u!61 &7737958947500984751
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471247478011141009}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.27948952, y: -0.38531017}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.8311348, y: 5.315481}
+  m_EdgeRadius: 0
 --- !u!1 &471247478019535781
 GameObject:
   m_ObjectHideFlags: 0
