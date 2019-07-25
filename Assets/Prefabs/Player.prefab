@@ -194,6 +194,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddb5f87f4621424cba9d16167435eed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerState: 0
+  armorState: 1
   dashSpeed: 500
   playerVelocity: 30
   shieldVelocity: 9
@@ -202,10 +204,11 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 256
-  jumpForce: 40
+  jumpForce: 60
   shieldPrefab: {fileID: 8697683325603813920, guid: c4abc007e867c7147937e6f83c12c187,
     type: 3}
   spawnShield: 0
+  shieldOn: 0
 --- !u!70 &471247478011141014
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

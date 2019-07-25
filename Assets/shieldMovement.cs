@@ -56,8 +56,14 @@ public class shieldMovement : MonoBehaviour
             if(collision.gameObject.GetComponent<PlayerController>().armorState == PlayerController.ArmorState.SHIELD_UP)
             {
                 Debug.Log("Touche bouclier");
+                ofGround = true;
             }
-            ofGround = true;
+            else
+            {
+                ofGround = true;
+                Debug.Log("joueur mort");
+            }
+            
         }
         
         if ((collision.gameObject.tag == "player") && (ofGround == true))

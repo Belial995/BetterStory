@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     private bool canMove = true;
     private float direction;
     public bool shieldOn = false;
+    public int playerIndex;
 
     private Animator animator;
     // Start is called before the first frame update
@@ -51,17 +52,24 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        animator.SetFloat("velocity",Mathf.Abs(rigidBody2D.velocity.x));
-        //mouvement gauche droite
-        
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        shieldOn = false;
-        if (canMove == true)
+        foreach (string n in Input.GetJoystickNames())
         {
-            Vector2 velocity = new Vector2(horizontalInput * playerVelocity, rigidBody2D.velocity.y);
-            rigidBody2D.velocity = velocity;
-         //inversion du sprite du personnage
+            Debug.Log(n);
+        }
+
+        if(playerIndex == 1)
+        {
+            animator.SetFloat("velocity", Mathf.Abs(rigidBody2D.velocity.x));
+            //mouvement gauche droite
+
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float verticalInput = Input.GetAxis("Vertical");
+            shieldOn = false;
+            if (canMove == true)
+            {
+                Vector2 velocity = new Vector2(horizontalInput * playerVelocity, rigidBody2D.velocity.y);
+                rigidBody2D.velocity = velocity;
+                //inversion du sprite du personnage
                 Vector3 scale = transform.localScale;
                 if (rigidBody2D.velocity.x > 0)
                 {
@@ -72,76 +80,174 @@ public class PlayerController : MonoBehaviour
                     scale.x = -Mathf.Abs(scale.x);
                 }
                 transform.localScale = scale;
-        }
-        else 
-        {
-            //inversion du sprite du personnage
-            Vector3 scale = transform.localScale;
-            if (horizontalInput > 0)
-            {
-                scale.x = Mathf.Abs(scale.x);
             }
-            else if (horizontalInput < 0)
+            else
             {
-                scale.x = -Mathf.Abs(scale.x);
+                //inversion du sprite du personnage
+                Vector3 scale = transform.localScale;
+                if (horizontalInput > 0)
+                {
+                    scale.x = Mathf.Abs(scale.x);
+                }
+                else if (horizontalInput < 0)
+                {
+                    scale.x = -Mathf.Abs(scale.x);
+                }
+                transform.localScale = scale;
             }
-            transform.localScale = scale;
-        }
-       
 
-        
-        //saut
-        bool canJump = Physics2D.OverlapCircle(jumpPosition.position, raycastRadius, mask);
-        if (canJump && Input.GetButtonDown("Jump"))//si appuye sur boutton saut
-        {
-            rigidBody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);//donne une impulsion verticale
-        }
-        //bouclier
-        //a mettre dans le code du joueur
-        if(Input.GetButtonDown("Fire1")&&(spawnShield != true))
-        {
-            
-            if(transform.localScale.x > 0)
+
+
+            //saut
+            bool canJump = Physics2D.OverlapCircle(jumpPosition.position, raycastRadius, mask);
+            if (canJump && Input.GetButtonDown("Jump"))//si appuye sur boutton saut
             {
-                GameObject monObject = Instantiate(shieldPrefab, new Vector3(transform.position.x + 5, transform.position.y, transform.position.z), Quaternion.identity);
-                monObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
-                monObject.GetComponent<Rigidbody2D>().velocity = new Vector2(shieldVelocity, verticalInput)*shieldVelocity;
+                rigidBody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);//donne une impulsion verticale
             }
-            if(transform.localScale.x < 0)
+            //bouclier
+            //a mettre dans le code du joueur
+            if (Input.GetButtonDown("Fire1") && (spawnShield != true))
             {
-                GameObject monObject = Instantiate(shieldPrefab, new Vector3(transform.position.x - 5, transform.position.y, transform.position.z), Quaternion.identity);
-                monObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
-                monObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-shieldVelocity, verticalInput)*shieldVelocity;
-            }
+
+                if (transform.localScale.x > 0)
+                {
+                    GameObject monObject = Instantiate(shieldPrefab, new Vector3(transform.position.x + 5, transform.position.y, transform.position.z), Quaternion.identity);
+                    monObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
+                    monObject.GetComponent<Rigidbody2D>().velocity = new Vector2(shieldVelocity, verticalInput) * shieldVelocity;
+                }
+                if (transform.localScale.x < 0)
+                {
+                    GameObject monObject = Instantiate(shieldPrefab, new Vector3(transform.position.x - 5, transform.position.y, transform.position.z), Quaternion.identity);
+                    monObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
+                    monObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-shieldVelocity, verticalInput) * shieldVelocity;
+                }
                 spawnShield = true;
-        }
-        //levée de bouclier
+            }
+            //levée de bouclier
 
-        if (Input.GetButton("Shield")&&(spawnShield == false))
-        {
-            armorState = ArmorState.SHIELD_UP;
-            canMove = false;
-            Debug.Log("boucliers");
-            GetComponent<CapsuleCollider2D>().enabled = true;
-            shieldOn = true;
+            if (Input.GetButton("Shield") && (spawnShield == false))
+            {
+                armorState = ArmorState.SHIELD_UP;
+                canMove = false;
+                Debug.Log("boucliers");
+                GetComponent<CapsuleCollider2D>().enabled = true;
+                shieldOn = true;
+            }
+            else
+            {
+                armorState = ArmorState.SHIELD_LESS;
+                canMove = true;
+                GetComponent<CapsuleCollider2D>().enabled = false;
+                shieldOn = false;
+            }
+            //dash
+            if (Input.GetButtonDown("Fire2") && (Input.GetButton("Shield")) && (spawnShield == false))
+            {
+                canMove = true;
+
+                dashState = DashState.DASH_BEGIN;
+
+
+                Debug.Log("dash");
+
+            }           
         }
-        else
+        if(playerIndex == 2)
         {
-            armorState = ArmorState.SHIELD_LESS;
-            canMove = true;
-            GetComponent<CapsuleCollider2D>().enabled = false;
+            animator.SetFloat("velocity", Mathf.Abs(rigidBody2D.velocity.x));
+            //mouvement gauche droite
+
+            float horizontalInput = Input.GetAxis("Horizontal2");
+            float verticalInput = Input.GetAxis("Vertical2");
             shieldOn = false;
-        }
-        //dash
-        if(Input.GetButtonDown("Fire2")&& (Input.GetButton("Shield")&&(spawnShield == false)))
-        {
-            canMove = true;
+            if (canMove == true)
+            {
+                Vector2 velocity = new Vector2(horizontalInput * playerVelocity, rigidBody2D.velocity.y);
+                rigidBody2D.velocity = velocity;
+                //inversion du sprite du personnage
+                Vector3 scale = transform.localScale;
+                if (rigidBody2D.velocity.x > 0)
+                {
+                    scale.x = Mathf.Abs(scale.x);
+                }
+                else if (rigidBody2D.velocity.x < 0)
+                {
+                    scale.x = -Mathf.Abs(scale.x);
+                }
+                transform.localScale = scale;
+            }
+            else
+            {
+                //inversion du sprite du personnage
+                Vector3 scale = transform.localScale;
+                if (horizontalInput > 0)
+                {
+                    scale.x = Mathf.Abs(scale.x);
+                }
+                else if (horizontalInput < 0)
+                {
+                    scale.x = -Mathf.Abs(scale.x);
+                }
+                transform.localScale = scale;
+            }
 
-            dashState = DashState.DASH_BEGIN;
 
 
-            Debug.Log("dash");
-            
+            //saut
+            bool canJump = Physics2D.OverlapCircle(jumpPosition.position, raycastRadius, mask);
+            if (canJump && Input.GetButtonDown("Jump2"))//si appuye sur boutton saut
+            {
+                rigidBody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);//donne une impulsion verticale
+            }
+            //bouclier
+            //a mettre dans le code du joueur
+            if (Input.GetButtonDown("Fire1(2)") && (spawnShield != true))
+            {
+
+                if (transform.localScale.x > 0)
+                {
+                    GameObject monObject = Instantiate(shieldPrefab, new Vector3(transform.position.x + 5, transform.position.y, transform.position.z), Quaternion.identity);
+                    monObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
+                    monObject.GetComponent<Rigidbody2D>().velocity = new Vector2(shieldVelocity, verticalInput) * shieldVelocity;
+                }
+                if (transform.localScale.x < 0)
+                {
+                    GameObject monObject = Instantiate(shieldPrefab, new Vector3(transform.position.x - 5, transform.position.y, transform.position.z), Quaternion.identity);
+                    monObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
+                    monObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-shieldVelocity, verticalInput) * shieldVelocity;
+                }
+                spawnShield = true;
+            }
+            //levée de bouclier
+
+            if (Input.GetButton("Shield2") && (spawnShield == false))
+            {
+                armorState = ArmorState.SHIELD_UP;
+                canMove = false;
+                Debug.Log("boucliers");
+                GetComponent<CapsuleCollider2D>().enabled = true;
+                shieldOn = true;
+            }
+            else
+            {
+                armorState = ArmorState.SHIELD_LESS;
+                canMove = true;
+                GetComponent<CapsuleCollider2D>().enabled = false;
+                shieldOn = false;
+            }
+            //dash
+            if (Input.GetButtonDown("Fire2(2)") && (Input.GetButton("Shield2")) && (spawnShield == false))
+            {
+                canMove = true;
+
+                dashState = DashState.DASH_BEGIN;
+
+
+                Debug.Log("dash");
+
+            }
+
+
         }
         Dash();
     }
