@@ -6,6 +6,7 @@ TagManager:
   tags:
   - sol
   - player
+  - shield
   layers:
   - Default
   - TransparentFX

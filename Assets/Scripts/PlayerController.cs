@@ -9,7 +9,13 @@ public class PlayerController : MonoBehaviour
         ALIVE,
         DEAD
     }
-    private PlayerState playerState = PlayerState.ALIVE;
+    public PlayerState playerState = PlayerState.ALIVE;
+    public enum ArmorState
+    {
+        SHIELD_UP,
+        SHIELD_LESS
+    }
+    public ArmorState armorState = ArmorState.SHIELD_LESS;
     public enum DashState
     {
         NOT_DASH,
@@ -30,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public bool spawnShield = false;
     private bool canMove = true;
     private float direction;
+    public bool shieldOn = false;
 
     private Animator animator;
     // Start is called before the first frame update
@@ -49,8 +56,8 @@ public class PlayerController : MonoBehaviour
         
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-
-        if(canMove == true)
+        shieldOn = false;
+        if (canMove == true)
         {
             Vector2 velocity = new Vector2(horizontalInput * playerVelocity, rigidBody2D.velocity.y);
             rigidBody2D.velocity = velocity;
@@ -112,14 +119,18 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButton("Shield")&&(spawnShield == false))
         {
+            armorState = ArmorState.SHIELD_UP;
             canMove = false;
             Debug.Log("boucliers");
-            GetComponent<CapsuleCollider2D>().enabled = true;       
+            GetComponent<CapsuleCollider2D>().enabled = true;
+            shieldOn = true;
         }
         else
         {
+            armorState = ArmorState.SHIELD_LESS;
             canMove = true;
             GetComponent<CapsuleCollider2D>().enabled = false;
+            shieldOn = false;
         }
         //dash
         if(Input.GetButtonDown("Fire2")&& (Input.GetButton("Shield")&&(spawnShield == false)))

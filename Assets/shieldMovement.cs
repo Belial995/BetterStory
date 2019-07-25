@@ -41,10 +41,22 @@ public class shieldMovement : MonoBehaviour
             ofGround = true;
 
         }
-
-        if (collision.gameObject.tag == "player")
+        if(collision.gameObject.tag == "shield")
         {
-            Debug.Log("Bouclier touche joûeur");
+            isFlying = false;
+            Debug.Log("Bouclier touche!");
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+            GetComponent<Rigidbody2D>().gravityScale = 10.0f;
+            ofGround = true;
+
+
+        }
+        if ((collision.gameObject.tag == "player") && (ofGround == false))
+        {
+            if(collision.gameObject.GetComponent<PlayerController>().armorState == PlayerController.ArmorState.SHIELD_UP)
+            {
+                Debug.Log("Touche bouclier");
+            }
             ofGround = true;
         }
         
@@ -54,6 +66,9 @@ public class shieldMovement : MonoBehaviour
             collision.gameObject.GetComponent<PlayerController>().spawnShield = false;
             Debug.Log("test");
         }
+       
+            
+        
 
 
 
