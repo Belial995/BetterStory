@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public enum PlayerState
+    {
+        ALIVE,
+        DEAD
+    }
+    private PlayerState playerState = PlayerState.ALIVE;
     public enum DashState
     {
         NOT_DASH,
@@ -27,12 +33,15 @@ public class PlayerController : MonoBehaviour
 
     private Animator animator;
     // Start is called before the first frame update
+    
     void Start()
     {
+        //Input.GetJoystickNames;
         animator = GetComponentInChildren<Animator>();
         rigidBody2D = GetComponent<Rigidbody2D>();
     }
     // Update is called once per frame
+    
     void Update()
     {
         animator.SetFloat("velocity",Mathf.Abs(rigidBody2D.velocity.x));
