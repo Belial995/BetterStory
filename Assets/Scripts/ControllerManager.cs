@@ -18,12 +18,14 @@ public class ControllerManager : MonoBehaviour
 
 
     [SerializeField] GameObject playerPrefab;
-   
+
     // Start is called before the first frame update
     void Start()
     {
         InputManager.OnDeviceAttached += AssignPlayer;
+
         DontDestroyOnLoad(gameObject);
+
     }
 
     // Update is called once per frame
@@ -45,5 +47,22 @@ public class ControllerManager : MonoBehaviour
         newPlayerObj.playerIndex = NumManettes;
 
         NumManettes++;
+    }
+    public void RespawnPlayer()
+    {
+        StartCoroutine(RespawnCoroutine());
+    }
+
+    IEnumerator RespawnCoroutine()
+    {
+        yield return new WaitForSeconds(1);
+
+        for (int i = 0; i < controllerConnected.Count; i++)
+        {
+            PlayerController newPlayerObj = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<PlayerController>();
+            newPlayerObj.playerDevice = controllerConnected[i].device;
+            newPlayerObj.playerIndex = controllerConnected[i].playerId;
+            Debug.Log("Respawn player");
+        }
     }
 }
