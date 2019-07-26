@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
         rigidBody2D = GetComponent<Rigidbody2D>();
         colliderShieldTop.enabled = false;
         colliderShieldDown.enabled = false;
+        colliderShieldFlanc.enabled = false;
 
         //InputManager.OnDeviceAttached += AssignPlayer;
 
@@ -173,11 +174,15 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("boucliers");
                 //playerShield.SetActive(true);
                 shieldOn = true;
+                colliderShieldFlanc.enabled = true;
+                colliderShieldTop.enabled = false;
+                colliderShieldDown.enabled = false;
                 if (playerDevice.LeftStickY > 0.2f)
                 {
                     Debug.Log("prout");
                     colliderShieldTop.enabled = true;
                     colliderShieldDown.enabled = false;
+                    colliderShieldFlanc.enabled = false;
                     //playerShield.SetActive(false);
                     shieldDown = false;
                     shieldUP = true;
@@ -187,6 +192,7 @@ public class PlayerController : MonoBehaviour
                     //playerShield.SetActive(false);
                     colliderShieldDown.enabled = true;
                     colliderShieldTop.enabled = false;
+                    colliderShieldFlanc.enabled = false;
                     shieldDown = true;
                     shieldUP = false;
                 }
@@ -194,6 +200,7 @@ public class PlayerController : MonoBehaviour
                 {
                     colliderShieldTop.enabled = false;
                     colliderShieldDown.enabled = false;
+                    colliderShieldFlanc.enabled = true;
                     shieldDown = false;
                     shieldUP = false;
                     //playerShield.SetActive(false);
@@ -205,6 +212,7 @@ public class PlayerController : MonoBehaviour
                 rigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
                 colliderShieldTop.enabled = false;
                 colliderShieldDown.enabled = false;
+                colliderShieldFlanc.enabled = false;
                 animator.SetBool("ShieldFlanc", false);
                 armorState = ArmorState.SHIELD_LESS;
                 canMove = true;
@@ -282,7 +290,7 @@ public class PlayerController : MonoBehaviour
             {
 
                 Debug.Log("Marque 2 point!");
-                _gm.scorePlayer2++;
+                _gm.scorePlayer1++;
 
             }
 

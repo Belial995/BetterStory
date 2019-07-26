@@ -59,7 +59,7 @@ public class shieldMovement : MonoBehaviour
             {
                 Debug.Log("Touche bouclier");
                 ofGround = true;
-                Destroy(gameObject);
+
                 
             }
             else
