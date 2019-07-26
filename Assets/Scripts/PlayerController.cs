@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     public bool shieldDown = false;
     public bool shieldThrow = false;
     public int playerIndex;
-    public GameObject shield;
+    public GameObject playerShield;
     public CapsuleCollider2D colliderShieldTop;
     public CapsuleCollider2D colliderShieldDown;
     public InputDevice playerDevice;
@@ -66,7 +66,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     
     void Update()
-    {
+    { 
+        //dash
+        if ((playerDevice.GetControl(InputControlType.LeftTrigger).IsPressed)&&(playerDevice.GetControl(InputControlType.LeftBumper).IsPressed)&&(spawnShield == false))
+        {
+            
+            canMove = true;
+            dashState = DashState.DASH_BEGIN;          
+            Dash();
+        }
+
         if (playerDevice == null)
             return;
 
@@ -74,16 +83,10 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Coucou j'appuie sur X");
         }
-        
-
-        foreach (string n in Input.GetJoystickNames())
-        {
-            Debug.Log(n);
-        }
-
+       
         Debug.Log(playerIndex);
         //if(playerIndex == 1)
-        {
+        
             animator.SetFloat("velocity", Mathf.Abs(rigidBody2D.velocity.x));
             //mouvement gauche droite
 
@@ -130,6 +133,7 @@ public class PlayerController : MonoBehaviour
             //a mettre dans le code du joueur
             if ( (playerDevice.GetControl(InputControlType.RightBumper).IsPressed) && (spawnShield != true))
             {
+
                 shieldThrow = true;
                 if (transform.localScale.x > 0)
                 {
@@ -148,14 +152,15 @@ public class PlayerController : MonoBehaviour
             }
             //levée de bouclier
 
-            if ((playerDevice.GetControl(InputControlType.LeftBumper).IsPressed) && (spawnShield == false))
+            if((playerDevice.GetControl(InputControlType.LeftBumper).IsPressed) && (spawnShield == false))
             {
-                
+                rigidBody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+
                 animator.SetBool("ShieldFlanc", true);
                 armorState = ArmorState.SHIELD_UP;
                 canMove = false;
                 Debug.Log("boucliers");
-                shield.SetActive(true);
+                playerShield.SetActive(true);
                 shieldOn = true;
                 if(playerDevice.LeftStickY > 0.2f)
                 {
@@ -179,31 +184,25 @@ public class PlayerController : MonoBehaviour
                     colliderShieldDown.enabled = false;
                     shieldDown = false;
                     shieldUP = false;
+                    playerShield.SetActive(false);
                 }
+
             }
             else
             {
+                rigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
                 colliderShieldTop.enabled = false;
                 colliderShieldDown.enabled = false;
                 animator.SetBool("ShieldFlanc", false);
                 armorState = ArmorState.SHIELD_LESS;
                 canMove = true;
-                shield.SetActive(false);
+                playerShield.SetActive(false);
                 shieldOn = false;
                 shieldDown = false;
                 shieldUP = false;
             }
+
             
-            //dash
-            if((playerDevice.GetControl(InputControlType.LeftBumper).IsPressed)&& (playerDevice.GetControl(InputControlType.LeftTrigger).WasPressed)&&(spawnShield == false))
-            {
-                canMove = true;
-                dashState = DashState.DASH_BEGIN;
-                Dash();
-                Debug.Log("dash");
-                                            
-            }                                       
-        }
         animator.SetBool("shieldDown", shieldDown);
         animator.SetBool("shieldUP", shieldUP);
         animator.SetBool("shieldThrow", shieldThrow);
@@ -212,17 +211,23 @@ public class PlayerController : MonoBehaviour
     
     void Dash()
     {
+                  
+        rigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
         switch (dashState)
         {
+            
             case DashState.DASH_BEGIN:
-                
-                if(transform.localScale.x > 0)
+                Debug.Log("dash");
+                if (transform.localScale.x > 0)
                 {
+
                     rigidBody2D.velocity = new Vector2(dashSpeed, 0);
+                    
                 }
                 if(transform.localScale.x < 0)
                 {
                     rigidBody2D.velocity = new Vector2(-dashSpeed, 0);
+                    
                 }
                 dashState = DashState.IN_DASH;
                 break;
@@ -234,7 +239,7 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
-    
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == ("shield") && (collision.gameObject.GetComponent<shieldMovement>().ofGround == false))

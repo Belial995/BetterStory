@@ -71,6 +71,7 @@ public class shieldMovement : MonoBehaviour
             
         }
 
+        
         if ((collision.gameObject.tag == "player") && (ofGround == true)&&(collision.gameObject.GetComponent<PlayerController>().spawnShield == true))
         {
             
