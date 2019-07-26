@@ -60,6 +60,7 @@ public class shieldMovement : MonoBehaviour
             {
                 Debug.Log("Touche bouclier");
                 ofGround = true;
+                Destroy(gameObject);
                 
             }
             else
@@ -70,12 +71,13 @@ public class shieldMovement : MonoBehaviour
             
         }
 
-        if ((collision.gameObject.tag == "player") && (ofGround == true))
+        if ((collision.gameObject.tag == "player") && (ofGround == true)&&(collision.gameObject.GetComponent<PlayerController>().spawnShield == true))
         {
-            Destroy(gameObject);
+            
             collision.gameObject.GetComponent<PlayerController>().spawnShield = false;
+            Destroy(gameObject);
             Debug.Log("test");
-            collision.gameObject.GetComponent<PlayerController>().shieldThrow = false;
+            
         }
 
 
