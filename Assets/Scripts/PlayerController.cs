@@ -42,9 +42,10 @@ public class PlayerController : MonoBehaviour
     public bool shieldDown = false;
     public bool shieldThrow = false;
     public int playerIndex;
-    public GameObject playerShield;
+    //public GameObject playerShield;
     public CapsuleCollider2D colliderShieldTop;
     public CapsuleCollider2D colliderShieldDown;
+    public CapsuleCollider2D colliderShieldFlanc;
     public InputDevice playerDevice;
 
     private Animator animator;
@@ -136,13 +137,13 @@ public class PlayerController : MonoBehaviour
                 shieldThrow = true;
                 if (transform.localScale.x > 0)
                 {
-                    GameObject monObject = Instantiate(shieldPrefab, new Vector3(transform.position.x + 5, transform.position.y, transform.position.z), Quaternion.identity);
+                    GameObject monObject = Instantiate(shieldPrefab, new Vector3(transform.position.x + 5, transform.position.y, -2), Quaternion.identity);
                     monObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
                     monObject.GetComponent<Rigidbody2D>().velocity = new Vector2(shieldVelocity, verticalInput) * shieldVelocity;
                 }
                 if (transform.localScale.x < 0)
                 {
-                    GameObject monObject = Instantiate(shieldPrefab, new Vector3(transform.position.x - 5, transform.position.y, transform.position.z), Quaternion.identity);
+                    GameObject monObject = Instantiate(shieldPrefab, new Vector3(transform.position.x - 5, transform.position.y, -2), Quaternion.identity);
                     monObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
                     monObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-shieldVelocity, verticalInput) * shieldVelocity;
                 }
@@ -160,19 +161,20 @@ public class PlayerController : MonoBehaviour
                 armorState = ArmorState.SHIELD_UP;
                 canMove = false;
                 Debug.Log("boucliers");
-                playerShield.SetActive(true);
+                //playerShield.SetActive(true);
                 shieldOn = true;
                 if (playerDevice.LeftStickY > 0.2f)
                 {
                     Debug.Log("prout");
                     colliderShieldTop.enabled = true;
                     colliderShieldDown.enabled = false;
+                    //playerShield.SetActive(false);
                     shieldDown = false;
                     shieldUP = true;
                 }
                 else if (playerDevice.LeftStickY < -0.2f)
                 {
-
+                    //playerShield.SetActive(false);
                     colliderShieldDown.enabled = true;
                     colliderShieldTop.enabled = false;
                     shieldDown = true;
@@ -184,7 +186,7 @@ public class PlayerController : MonoBehaviour
                     colliderShieldDown.enabled = false;
                     shieldDown = false;
                     shieldUP = false;
-                    playerShield.SetActive(false);
+                    //playerShield.SetActive(false);
                 }
 
             }
@@ -196,7 +198,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("ShieldFlanc", false);
                 armorState = ArmorState.SHIELD_LESS;
                 canMove = true;
-                playerShield.SetActive(false);
+                //playerShield.SetActive(false);
                 shieldOn = false;
                 shieldDown = false;
                 shieldUP = false;

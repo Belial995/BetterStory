@@ -51,8 +51,6 @@ public class shieldMovement : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
             GetComponent<Rigidbody2D>().gravityScale = 10.0f;
             ofGround = true;
-
-
         }
         if ((collision.gameObject.tag == "player") && (ofGround == false))
         {
@@ -69,9 +67,7 @@ public class shieldMovement : MonoBehaviour
                 Debug.Log("joueur mort");
             }
             
-        }
-
-        
+        }       
         if ((collision.gameObject.tag == "player") && (ofGround == true)&&(collision.gameObject.GetComponent<PlayerController>().spawnShield == true))
         {
             
@@ -80,11 +76,5 @@ public class shieldMovement : MonoBehaviour
             Debug.Log("test");
             
         }
-
-
-
-
-
-
     }
 }

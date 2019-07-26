@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 487444839}
   - component: {fileID: 487444840}
   - component: {fileID: 9039828660243226765}
+  - component: {fileID: 1212963125899556948}
   m_Layer: 0
   m_Name: Player
   m_TagString: player
@@ -159,12 +160,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 471247478011141009}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -63.12, y: 24.77, z: -2}
+  m_LocalPosition: {x: -63.08, y: 24.77, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 471247477554371699}
   - {fileID: 471247478019535782}
-  - {fileID: 7045212262715316687}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -246,9 +246,10 @@ MonoBehaviour:
   shieldDown: 0
   shieldThrow: 0
   playerIndex: 1
-  playerShield: {fileID: 7273485595545479003}
+  playerShield: {fileID: 0}
   colliderShieldTop: {fileID: 487444840}
   colliderShieldDown: {fileID: 487444839}
+  colliderShieldFlanc: {fileID: 1212963125899556948}
 --- !u!70 &487444839
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -307,6 +308,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.6713142, y: 4.9142704}
   m_EdgeRadius: 0
+--- !u!70 &1212963125899556948
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471247478011141009}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.6485424, y: -0.39887047}
+  m_Size: {x: 1.5538826, y: 5.1830597}
+  m_Direction: 0
 --- !u!1 &471247478019535781
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,50 +355,3 @@ Transform:
   m_Father: {fileID: 471247478011141013}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7273485595545479003
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7045212262715316687}
-  - component: {fileID: 7961531322037759591}
-  m_Layer: 0
-  m_Name: Shield
-  m_TagString: shield
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7045212262715316687
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7273485595545479003}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.14, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 471247478011141013}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &7961531322037759591
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7273485595545479003}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 2377ab69ea04cf74c986640dca42c81d, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.51384544, y: -0.3898592}
-  m_Size: {x: 1.5599709, y: 5.161894}
-  m_Direction: 0
