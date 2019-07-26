@@ -68,11 +68,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     { 
         //dash
-        if ((playerDevice.GetControl(InputControlType.LeftTrigger).IsPressed)&&(playerDevice.GetControl(InputControlType.LeftBumper).IsPressed)&&(spawnShield == false))
+        if ((playerDevice.GetControl(InputControlType.LeftTrigger).IsPressed)&&(playerDevice.GetControl(InputControlType.LeftBumper).WasReleased)&&(spawnShield == false))
         {
-            
-            canMove = true;
-            dashState = DashState.DASH_BEGIN;          
+            Debug.Log("dash");
+            dashState = DashState.DASH_BEGIN;
             Dash();
         }
 
@@ -150,9 +149,10 @@ public class PlayerController : MonoBehaviour
                 spawnShield = true;
                 
             }
-            //levée de bouclier
-
-            if((playerDevice.GetControl(InputControlType.LeftBumper).IsPressed) && (spawnShield == false))
+        //levée de bouclier
+        if (dashState == DashState.NOT_DASH)
+        {
+            if ((playerDevice.GetControl(InputControlType.LeftBumper).IsPressed) && (spawnShield == false))
             {
                 rigidBody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 
@@ -162,7 +162,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("boucliers");
                 playerShield.SetActive(true);
                 shieldOn = true;
-                if(playerDevice.LeftStickY > 0.2f)
+                if (playerDevice.LeftStickY > 0.2f)
                 {
                     Debug.Log("prout");
                     colliderShieldTop.enabled = true;
@@ -170,9 +170,9 @@ public class PlayerController : MonoBehaviour
                     shieldDown = false;
                     shieldUP = true;
                 }
-                else  if (playerDevice.LeftStickY < -0.2f)
+                else if (playerDevice.LeftStickY < -0.2f)
                 {
-                    
+
                     colliderShieldDown.enabled = true;
                     colliderShieldTop.enabled = false;
                     shieldDown = true;
@@ -201,8 +201,7 @@ public class PlayerController : MonoBehaviour
                 shieldDown = false;
                 shieldUP = false;
             }
-
-            
+        }           
         animator.SetBool("shieldDown", shieldDown);
         animator.SetBool("shieldUP", shieldUP);
         animator.SetBool("shieldThrow", shieldThrow);
@@ -211,30 +210,45 @@ public class PlayerController : MonoBehaviour
     
     void Dash()
     {
-                  
-        rigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+        canMove = false;
+        dashState = DashState.DASH_BEGIN;
+        LastDashPressed = Time.time;
+    }
+
+    float timeToDash = 0.1f;
+    float LastDashPressed;
+
+    private void FixedUpdate()
+    {
+
         switch (dashState)
         {
-            
             case DashState.DASH_BEGIN:
-                Debug.Log("dash");
+               
+                rigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
                 if (transform.localScale.x > 0)
                 {
 
                     rigidBody2D.velocity = new Vector2(dashSpeed, 0);
-                    
+
                 }
-                if(transform.localScale.x < 0)
+                if (transform.localScale.x < 0)
                 {
                     rigidBody2D.velocity = new Vector2(-dashSpeed, 0);
-                    
+
                 }
+
                 dashState = DashState.IN_DASH;
+
                 break;
             case DashState.IN_DASH:
-                dashState = DashState.DASH_END;
+                if (Time.time >= LastDashPressed + timeToDash)
+                {
+                    dashState = DashState.DASH_END;
+                }
                 break;
             case DashState.DASH_END:
+                canMove = true;
                 dashState = DashState.NOT_DASH;
                 break;
         }
