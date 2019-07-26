@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     public bool shieldOn = false;
     public bool shieldUP = false;
     public bool shieldDown = false;
+    public bool shieldThrow = false;
     public int playerIndex;
     public GameObject shield;
     public CapsuleCollider2D colliderShieldTop;
@@ -132,7 +133,7 @@ public class PlayerController : MonoBehaviour
             //a mettre dans le code du joueur
             if ( (playerDevice.GetControl(InputControlType.RightBumper).IsPressed) && (spawnShield != true))
             {
-
+                shieldThrow = true;
                 if (transform.localScale.x > 0)
                 {
                     GameObject monObject = Instantiate(shieldPrefab, new Vector3(transform.position.x + 5, transform.position.y, transform.position.z), Quaternion.identity);
@@ -146,6 +147,7 @@ public class PlayerController : MonoBehaviour
                     monObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-shieldVelocity, verticalInput) * shieldVelocity;
                 }
                 spawnShield = true;
+                
             }
             //levée de bouclier
 
@@ -190,6 +192,8 @@ public class PlayerController : MonoBehaviour
                 canMove = true;
                 shield.SetActive(false);
                 shieldOn = false;
+                shieldDown = false;
+                shieldUP = false;
             }
             
             //dash
@@ -204,6 +208,7 @@ public class PlayerController : MonoBehaviour
         }
         animator.SetBool("shieldDown", shieldDown);
         animator.SetBool("shieldUP", shieldUP);
+        animator.SetBool("shieldThrow", shieldThrow);
     }   
                    
     /*if(playerIndex == 2)

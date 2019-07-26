@@ -8,9 +8,12 @@ public class shieldMovement : MonoBehaviour
     private bool isFlying;
     public bool ofGround;
 
+    
+
     // Start is called before the first frame update
     void Start()
     {
+        
         isFlying = true;
         ofGround = false;
 
@@ -57,6 +60,7 @@ public class shieldMovement : MonoBehaviour
             {
                 Debug.Log("Touche bouclier");
                 ofGround = true;
+                
             }
             else
             {
@@ -71,6 +75,7 @@ public class shieldMovement : MonoBehaviour
             Destroy(gameObject);
             collision.gameObject.GetComponent<PlayerController>().spawnShield = false;
             Debug.Log("test");
+            collision.gameObject.GetComponent<PlayerController>().shieldThrow = false;
         }
 
 
