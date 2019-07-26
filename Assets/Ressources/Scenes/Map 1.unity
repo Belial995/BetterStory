@@ -1322,7 +1322,7 @@ GameObject:
   - component: {fileID: 1005437774}
   m_Layer: 8
   m_Name: PlateFormeMilieu (3)
-  m_TagString: Untagged
+  m_TagString: sol
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1428,7 +1428,7 @@ GameObject:
   - component: {fileID: 1041151814}
   m_Layer: 8
   m_Name: PlateFormeMilieu
-  m_TagString: Untagged
+  m_TagString: sol
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1840,7 +1840,7 @@ GameObject:
   - component: {fileID: 1443416869}
   m_Layer: 8
   m_Name: PlateFormeMilieu (2)
-  m_TagString: Untagged
+  m_TagString: sol
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1946,7 +1946,7 @@ GameObject:
   - component: {fileID: 1598751937}
   m_Layer: 8
   m_Name: PlateFormeMilieu (1)
-  m_TagString: Untagged
+  m_TagString: sol
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
