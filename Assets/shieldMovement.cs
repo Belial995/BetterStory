@@ -7,6 +7,7 @@ public class shieldMovement : MonoBehaviour
     public float shieldVelocity;
     private bool isFlying;
     public bool ofGround;
+    public int shieldPlayerId;
 
     
 

@@ -51,7 +51,8 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     // Start is called before the first frame update
 
-
+    [SerializeField]
+    private gameManager _gm;
     
 
     void Start()
@@ -63,6 +64,9 @@ public class PlayerController : MonoBehaviour
         colliderShieldDown.enabled = false;
 
         //InputManager.OnDeviceAttached += AssignPlayer;
+
+        //cherche Game Manager
+        _gm = GameObject.Find("ControlerManager").GetComponent<gameManager>();
     }
     // Update is called once per frame
     
@@ -74,7 +78,10 @@ public class PlayerController : MonoBehaviour
             Debug.Log("dash");
             dashState = DashState.DASH_BEGIN;
             Dash();
+
         }
+
+
 
         if (playerDevice == null)
             return;
@@ -140,13 +147,16 @@ public class PlayerController : MonoBehaviour
                     GameObject monObject = Instantiate(shieldPrefab, new Vector3(transform.position.x + 5, transform.position.y, -2), Quaternion.identity);
                     monObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
                     monObject.GetComponent<Rigidbody2D>().velocity = new Vector2(shieldVelocity, verticalInput) * shieldVelocity;
+                    monObject.GetComponent<shieldMovement>().shieldPlayerId = playerIndex;
+
                 }
                 if (transform.localScale.x < 0)
                 {
                     GameObject monObject = Instantiate(shieldPrefab, new Vector3(transform.position.x - 5, transform.position.y, -2), Quaternion.identity);
                     monObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
                     monObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-shieldVelocity, verticalInput) * shieldVelocity;
-                }
+                    monObject.GetComponent<shieldMovement>().shieldPlayerId = playerIndex;
+            }
                 spawnShield = true;
                 
             }
@@ -260,7 +270,24 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == ("shield") && (collision.gameObject.GetComponent<shieldMovement>().ofGround == false))
         {
+            if(collision.GetComponent<shieldMovement>().shieldPlayerId == 0)
+            {
+
+                Debug.Log("Marque 1 point!");
+                _gm.scorePlayer1++;
+
+            }
+
+            if (collision.GetComponent<shieldMovement>().shieldPlayerId == 1)
+            {
+
+                Debug.Log("Marque 2 point!");
+                _gm.scorePlayer2++;
+
+            }
+
             Destroy(gameObject);
+
 
         }
     }

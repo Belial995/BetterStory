@@ -16,6 +16,7 @@ public class ControllerManager : MonoBehaviour
     public List<PlayerToController> controllerConnected;
     public int NumManettes = 0;
 
+
     [SerializeField] GameObject playerPrefab;
    
     // Start is called before the first frame update
