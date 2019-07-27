@@ -38,5 +38,21 @@ public class gameManager : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             FindObjectOfType<ControllerManager>().RespawnPlayer();
         }
+        if (scorePlayer1 == 10) 
+        {
+            Debug.Log("player1Win");
+        }
+        if (scorePlayer2 == 10)
+        {
+            Debug.Log("player2Win");
+        }
+        if (scorePlayer3 == 10)
+        {
+            Debug.Log("player3Win");
+        }
+        if (scorePlayer4 == 10)
+        {
+            Debug.Log("player4Win");
+        }
     }
 }

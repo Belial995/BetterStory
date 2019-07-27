@@ -290,9 +290,24 @@ public class PlayerController : MonoBehaviour
             {
 
                 Debug.Log("Marque 2 point!");
-                _gm.scorePlayer1++;
+                _gm.scorePlayer2++;
 
             }
+            if (collision.GetComponent<shieldMovement>().shieldPlayerId == 2 )
+            {
+
+                Debug.Log("Marque 1 point!");
+                _gm.scorePlayer3++;
+
+            }
+            if (collision.GetComponent<shieldMovement>().shieldPlayerId == 3)
+            {
+
+                Debug.Log("Marque 1 point!");
+                _gm.scorePlayer4++;
+
+            }
+
 
             Destroy(gameObject);
 
