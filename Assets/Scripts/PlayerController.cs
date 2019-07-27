@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using InControl;
 using UnityEngine.UI;
 
 
+using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     public enum PlayerState
@@ -76,8 +76,13 @@ public class PlayerController : MonoBehaviour
         //cherche Game Manager
         _gm = GameObject.Find("ControlerManager").GetComponent<gameManager>();
     }
+
+    int LastXMouse;
+    int DeltaMouseAxisX;
+    Vector3 positionCursor;
+
     // Update is called once per frame
-    
+
     void Update()
     { 
         //dash
