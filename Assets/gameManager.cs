@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class gameManager : MonoBehaviour
     public float scorePlayer2;
     public float scorePlayer3;
     public float scorePlayer4;
+    
 
     void Awake()
     {
@@ -27,12 +29,13 @@ public class gameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if(Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -54,5 +57,6 @@ public class gameManager : MonoBehaviour
         {
             Debug.Log("player4Win");
         }
+        
     }
 }

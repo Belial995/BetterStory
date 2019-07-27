@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using InControl;
+using UnityEngine.UI;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -47,8 +49,13 @@ public class PlayerController : MonoBehaviour
     public CapsuleCollider2D colliderShieldDown;
     public CapsuleCollider2D colliderShieldFlanc;
     public InputDevice playerDevice;
-
+    public bool playerDead = false;
     private Animator animator;
+    public Text scorePlayerOne;
+    public Text scorePlayerTwo;
+    public Text scorePlayerThree;
+    public Text scorePlayerFour;
+
     // Start is called before the first frame update
 
     [SerializeField]
@@ -63,7 +70,7 @@ public class PlayerController : MonoBehaviour
         colliderShieldTop.enabled = false;
         colliderShieldDown.enabled = false;
         colliderShieldFlanc.enabled = false;
-
+        scorePlayerOne = GameObject.Find("Text1");
         //InputManager.OnDeviceAttached += AssignPlayer;
 
         //cherche Game Manager
@@ -278,11 +285,14 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == ("shield") && (collision.gameObject.GetComponent<shieldMovement>().ofGround == false))
         {
-            if(collision.GetComponent<shieldMovement>().shieldPlayerId == 0)
+            playerDead = true;
+            animator.SetBool("playerDead", playerDead);
+            if (collision.GetComponent<shieldMovement>().shieldPlayerId == 0)
             {
 
                 Debug.Log("Marque 1 point!");
                 _gm.scorePlayer1++;
+                scorePlayerOne.Text = _gm.scorePlayer1;
 
             }
 
@@ -307,9 +317,9 @@ public class PlayerController : MonoBehaviour
                 _gm.scorePlayer4++;
 
             }
+            
+            //Destroy(gameObject);
 
-
-            Destroy(gameObject);
 
 
         }
