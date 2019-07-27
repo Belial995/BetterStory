@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
+using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     public enum PlayerState
@@ -40,17 +40,56 @@ public class PlayerController : MonoBehaviour
 
     private Animator animator;
     // Start is called before the first frame update
+
+    //[SerializeField] Transform transCursor;
     
     void Start()
     {
         //Input.GetJoystickNames;
         animator = GetComponentInChildren<Animator>();
         rigidBody2D = GetComponent<Rigidbody2D>();
+
+
+        DeltaMouseAxisX = 0;
+        LastXMouse = (int)Input.mousePosition.x;
     }
+
+    int LastXMouse;
+    int DeltaMouseAxisX;
+    Vector3 positionCursor;
+
     // Update is called once per frame
-    
+
     void Update()
     {
+        //if (Input.GetMouseButtonDown(0))
+            
+
+        //if (LastXMouse != (int)Input.mousePosition.x)
+        {
+//          Debug.Log(DeltaMouseAxisX);
+
+                //DeltaMouseAxisX += (int)Input.mousePosition.x - LastXMouse;
+                //LastXMouse = (int)Input.mousePosition.x;
+                //if(DeltaMouseAxisX > 5)
+                //{
+                   // DeltaMouseAxisX = 5;
+                //}
+                //if (DeltaMouseAxisX < -5)
+                //{
+                   // DeltaMouseAxisX = -5;
+                //}
+        }
+
+
+
+
+
+
+        //transCursor.position = new Vector3(transform.position.x + DeltaMouseAxisX, transform.position.y, transform.position.z);
+       
+
+
         animator.SetFloat("velocity",Mathf.Abs(rigidBody2D.velocity.x));
         //mouvement gauche droite
         
@@ -63,29 +102,38 @@ public class PlayerController : MonoBehaviour
             rigidBody2D.velocity = velocity;
          //inversion du sprite du personnage
                 Vector3 scale = transform.localScale;
-                if (rigidBody2D.velocity.x > 0)
-                {
-                    scale.x = Mathf.Abs(scale.x);
-                }
-                else if (rigidBody2D.velocity.x < 0)
-                {
-                    scale.x = -Mathf.Abs(scale.x);
-                }
-                transform.localScale = scale;
+            if (DeltaMouseAxisX > 0)
+            {
+                scale.x = Mathf.Abs(scale.x);
+            }
+            else if (DeltaMouseAxisX < 0)
+            {
+                scale.x = -Mathf.Abs(scale.x);
+            }
+            transform.localScale = scale;
+            //if (rigidBody2D.velocity.x > 0)
+            //{
+            //    scale.x = Mathf.Abs(scale.x);
+            //}
+            //else if (rigidBody2D.velocity.x < 0)
+            //{
+            //    scale.x = -Mathf.Abs(scale.x);
+            //}
+            //transform.localScale = scale;
         }
         else 
         {
             //inversion du sprite du personnage
             Vector3 scale = transform.localScale;
-            if (horizontalInput > 0)
-            {
-                scale.x = Mathf.Abs(scale.x);
-            }
-            else if (horizontalInput < 0)
-            {
-                scale.x = -Mathf.Abs(scale.x);
-            }
-            transform.localScale = scale;
+            //if (horizontalInput > 0)
+            //{
+            //    scale.x = Mathf.Abs(scale.x);
+            //}
+            //else if (horizontalInput < 0)
+            //{
+            //    scale.x = -Mathf.Abs(scale.x);
+            //}
+            //transform.localScale = scale;
         }
        
 
